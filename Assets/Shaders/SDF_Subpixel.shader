@@ -56,9 +56,9 @@
                 float2x2 dUV = transpose( float2x2( ddx(i.uv), ddy(i.uv) ) );
                 
                 // below code assumes RGB pixels
-                float opacityR = SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(-2.0 / 6.0, 0) * _PlaceHolder));
+                float opacityR = SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(-0.333, 0) * _PlaceHolder));
                 float opacityG = SAMPLE_SDF(_MainTex, i.uv);
-                float opacityB = SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2( 2.0 / 6.0, 0) * _PlaceHolder));
+                float opacityB = SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2( 0.333, 0) * _PlaceHolder));
                 
                 float3 opacity = SMOOTHSTEP(_SmoothstepMin, _SmoothstepMax, float3(opacityR, opacityG, opacityB));
 				return fixed4(opacity.r, opacity.g, opacity.b, 1);
