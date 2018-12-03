@@ -66,10 +66,10 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PlaceHolder: 0.99
+    - _PlaceHolder: 1.07
     - _SmoothnessTextureChannel: 0
-    - _SmoothstepMax: 0.721
-    - _SmoothstepMin: 0
+    - _SmoothstepMax: 0.263
+    - _SmoothstepMin: 0.447
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
