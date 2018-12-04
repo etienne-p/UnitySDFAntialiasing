@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028355, g: 0.22571374, b: 0.30692255, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -389,7 +389,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 6c619c94b70174b01a135b5fec7250d3, type: 2}
+  - {fileID: 2100000, guid: 9722a6162f7624ccc913be32a7920b09, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -443,3 +443,5 @@ MonoBehaviour:
   matDefault: {fileID: 2100000, guid: be898a2d662bb477ab6d7d5db49056c2, type: 2}
   matSuperSampling: {fileID: 2100000, guid: 6c619c94b70174b01a135b5fec7250d3, type: 2}
   matSubpixel: {fileID: 2100000, guid: a5529a8bb9b9f4e08b28b6ebb762caaf, type: 2}
+  matSubpixelSuperSampled: {fileID: 2100000, guid: 9722a6162f7624ccc913be32a7920b09,
+    type: 2}

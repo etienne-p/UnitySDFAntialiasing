@@ -68,8 +68,8 @@ Material:
     - _Parallax: 0.02
     - _PlaceHolder: 1.66
     - _SmoothnessTextureChannel: 0
-    - _SmoothstepMax: 0.205
-    - _SmoothstepMin: 0.453
+    - _SmoothstepMax: 0.188
+    - _SmoothstepMin: 0.481
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
