@@ -57,14 +57,14 @@
                 
                
                 // below code assumes RGB pixels
-                float R =   SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(-2.5 / 7.0, 0) * _PlaceHolder)) + 
-                            SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(-1.5 / 7.0, 0) * _PlaceHolder));
+                float R =   SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(-2.5 / 6.0, 0) * _PlaceHolder)) + 
+                            SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(-1.5 / 6.0, 0) * _PlaceHolder));
                 
-                float G =   SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(-0.5 / 7.0, 0) * _PlaceHolder)) + 
-                            SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2( 0.5 / 7.0, 0) * _PlaceHolder));
+                float G =   SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(-0.5 / 6.0, 0) * _PlaceHolder)) + 
+                            SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2( 0.5 / 6.0, 0) * _PlaceHolder));
                     
-                float B =   SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(1.5 / 7.0, 0) * _PlaceHolder)) + 
-                            SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(2.5 / 7.0, 0) * _PlaceHolder));
+                float B =   SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(1.5 / 6.0, 0) * _PlaceHolder)) + 
+                            SAMPLE_SDF(_MainTex, i.uv + mul(dUV, float2(2.5 / 6.0, 0) * _PlaceHolder));
                     
                 float3 px = float3(R, G, B) * 0.5;
                     
