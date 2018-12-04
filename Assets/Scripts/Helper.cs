@@ -6,11 +6,12 @@ using UnityEngine;
 [RequireComponent(typeof(MeshRenderer))]
 public class Helper : MonoBehaviour 
 {
-    public enum Technique { None, Default, SuperSampling, Subpixel }
+    public enum Technique { None, Default, SuperSampling, Subpixel, SubpixelSuperSampled }
 
     [SerializeField] Material matDefault;
     [SerializeField] Material matSuperSampling;
     [SerializeField] Material matSubpixel;
+    [SerializeField] Material matSubpixelSuperSampled;
 
     MeshRenderer meshRenderer;
 
@@ -33,6 +34,9 @@ public class Helper : MonoBehaviour
                     break;
                 case Technique.Subpixel:
                     selected = matSubpixel;
+                    break;
+                case Technique.SubpixelSuperSampled:
+                    selected = matSubpixelSuperSampled;
                     break;
                 default: break;
             }
