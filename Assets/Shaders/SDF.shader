@@ -5,7 +5,6 @@
         _MainTex ("Texture", 2D) = "white" {}
         _Threshold ("Threshold", Range(0, 1)) = 0.5
         _Smoothness ("Smoothness", Range(0, 2)) = 0.5
-        _PlaceHolder ("PlaceHolder", Range (0, 2)) = 1
     }
     SubShader
     {

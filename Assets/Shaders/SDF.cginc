@@ -16,11 +16,9 @@
 // Uniforms
 sampler2D _MainTex;
 float4 _MainTex_ST;
-float4 _MainTex_TexelSize;
 
 float _Threshold;
 float _Smoothness;
-float _PlaceHolder;
 
 struct appdata
 {
@@ -63,19 +61,19 @@ fixed4 frag (v2f i) : SV_Target
     float2x2 J = JACOBIAN(i.uv);
     
     return 0.25 * (
-        sdf(i.uv + mul(J, float2( 1, 1) * 0.25 * _PlaceHolder)) + 
-        sdf(i.uv + mul(J, float2( 1,-1) * 0.25 * _PlaceHolder)) +
-        sdf(i.uv + mul(J, float2(-1, 1) * 0.25 * _PlaceHolder)) +
-        sdf(i.uv + mul(J, float2(-1,-1) * 0.25 * _PlaceHolder)));
+        sdf(i.uv + mul(J, float2( 1, 1) * 0.25)) + 
+        sdf(i.uv + mul(J, float2( 1,-1) * 0.25)) +
+        sdf(i.uv + mul(J, float2(-1, 1) * 0.25)) +
+        sdf(i.uv + mul(J, float2(-1,-1) * 0.25)));
 }
 #elif SDF_SUBPIXEL
 fixed4 frag (v2f i) : SV_Target
 {
     float2x2 J = JACOBIAN(i.uv);
     
-    float R = sdf(i.uv + mul(J, float2(-0.333, 0) * _PlaceHolder));
+    float R = sdf(i.uv + mul(J, float2(-0.333, 0)));
     float G = sdf(i.uv);
-    float B = sdf(i.uv + mul(J, float2( 0.333, 0) * _PlaceHolder));
+    float B = sdf(i.uv + mul(J, float2( 0.333, 0)));
     
     return fixed4(R, G, B, (R + G + B) / 3.);
 }
@@ -84,14 +82,14 @@ fixed4 frag (v2f i) : SV_Target
 {
     float2x2 J = JACOBIAN(i.uv);
     
-    float R =   sdf(i.uv + mul(J, float2(-2.5 / 6.0, 0) * _PlaceHolder)) + 
-                sdf(i.uv + mul(J, float2(-1.5 / 6.0, 0) * _PlaceHolder));
+    float R =   sdf(i.uv + mul(J, float2(-2.5 / 6.0, 0))) + 
+                sdf(i.uv + mul(J, float2(-1.5 / 6.0, 0)));
 
-    float G =   sdf(i.uv + mul(J, float2(-0.5 / 6.0, 0) * _PlaceHolder)) + 
-                sdf(i.uv + mul(J, float2( 0.5 / 6.0, 0) * _PlaceHolder));
+    float G =   sdf(i.uv + mul(J, float2(-0.5 / 6.0, 0))) + 
+                sdf(i.uv + mul(J, float2( 0.5 / 6.0, 0)));
         
-    float B =   sdf(i.uv + mul(J, float2(1.5 / 6.0, 0) * _PlaceHolder)) + 
-                sdf(i.uv + mul(J, float2(2.5 / 6.0, 0) * _PlaceHolder));
+    float B =   sdf(i.uv + mul(J, float2( 1.5 / 6.0, 0))) + 
+                sdf(i.uv + mul(J, float2( 2.5 / 6.0, 0)));
                 
     return fixed4(R, G, B, (R + G + B) / 3.) / 2.;
 }
