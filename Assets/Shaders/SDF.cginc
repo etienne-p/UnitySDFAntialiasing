@@ -77,6 +77,19 @@ fixed4 frag (v2f i) : SV_Target
     
     return fixed4(R, G, B, (R + G + B) / 3.);
 }
+#elif SDF_SUBPIXEL_DX
+fixed4 frag (v2f i) : SV_Target
+{
+    float sdfValue = (SAMPLE_SDF(_MainTex, i.uv) - _Threshold) / (1. - _Threshold);
+    float2 sdfGrad = float2(ddx(sdfValue), ddy(sdfValue));
+    float afwidth = _Smoothness * length(sdfGrad);
+    
+    float R = smoothstep(-afwidth, afwidth, sdfValue - sdfGrad.x / 3.);
+    float G = smoothstep(-afwidth, afwidth, sdfValue);
+    float B = smoothstep(-afwidth, afwidth, sdfValue + sdfGrad.x / 3.);
+
+    return fixed4(R, G, B, (R + G + B) / 3.);
+}
 #elif SDF_SUPERSAMPLE_SUBPIXEL
 fixed4 frag (v2f i) : SV_Target
 {

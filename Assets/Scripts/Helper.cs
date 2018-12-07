@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(MeshRenderer))]
 public class Helper : MonoBehaviour 
 {
-    public enum Technique { None, Default, SuperSampling, Subpixel, SubpixelSuperSampled }
+    public enum Technique { None, Default, SuperSampling, Subpixel, SubpixelDx, SubpixelSuperSampled }
 
     [SerializeField]
     Shader sdfShader;
@@ -18,6 +18,7 @@ public class Helper : MonoBehaviour
         dict[Technique.Default] = "SDF_DEFAULT";
         dict[Technique.SuperSampling] = "SDF_SUPERSAMPLE";
         dict[Technique.Subpixel] = "SDF_SUBPIXEL";
+        dict[Technique.SubpixelDx] = "SDF_SUBPIXEL_DX";
         dict[Technique.SubpixelSuperSampled] = "SDF_SUPERSAMPLE_SUBPIXEL";
         return dict;
     }
