@@ -11,14 +11,16 @@
 #define MAX_FLOAT4(x) (max(x.r, max(x.g, max(x.b, x.a))))
 
 // Texel coordinates Jacobian
-#define JACOBIAN(uv) (transpose( float2x2( ddx(uv), ddy(uv) ) ));
+#define JACOBIAN(uv) (transpose( float2x2( ddx(uv), ddy(uv) ) ))
 
 // Uniforms
 sampler2D _MainTex;
 float4 _MainTex_ST;
+float4 _MainTex_TexelSize;
 
-float _SmoothstepMin;
-float _SmoothstepMax;
+float _Threshold;
+float _Smoothness;
+float _PlaceHolder;
 
 struct appdata
 {
@@ -41,24 +43,61 @@ v2f vert (appdata v)
     o.uv = TRANSFORM_TEX(v.uv, _MainTex);
     return o;
 }
-		
-			
-fixed4 frag_sdf (v2f i) : SV_Target
-{
-    return fixed4(1, 0, 0, 1);
-}
 
-fixed4 frag_sdf_supersample (v2f i) : SV_Target
+float sdf(float2 uv)
 {
-    return fixed4(1, 0, 0, 1);
+    float sdfValue = (SAMPLE_SDF(_MainTex, uv) - _Threshold) / (1. - _Threshold);
+    float2 sdfGrad = float2(ddx(sdfValue), ddy(sdfValue));
+    float afwidth = _Smoothness * length(sdfGrad);
+    return smoothstep(-afwidth, afwidth, sdfValue); 
 }
+	
+#if SDF_DEFAULT
+fixed4 frag (v2f i) : SV_Target
+{
+    return sdf(i.uv);
+}
+#elif SDF_SUPERSAMPLE
+fixed4 frag (v2f i) : SV_Target
+{
+    float2x2 J = JACOBIAN(i.uv);
+    
+    return 0.25 * (
+        sdf(i.uv + mul(J, float2( 1, 1) * 0.25 * _PlaceHolder)) + 
+        sdf(i.uv + mul(J, float2( 1,-1) * 0.25 * _PlaceHolder)) +
+        sdf(i.uv + mul(J, float2(-1, 1) * 0.25 * _PlaceHolder)) +
+        sdf(i.uv + mul(J, float2(-1,-1) * 0.25 * _PlaceHolder)));
+}
+#elif SDF_SUBPIXEL
+fixed4 frag (v2f i) : SV_Target
+{
+    float2x2 J = JACOBIAN(i.uv);
+    
+    float R = sdf(i.uv + mul(J, float2(-0.333, 0) * _PlaceHolder));
+    float G = sdf(i.uv);
+    float B = sdf(i.uv + mul(J, float2( 0.333, 0) * _PlaceHolder));
+    
+    return fixed4(R, G, B, (R + G + B) / 3.);
+}
+#elif SDF_SUPERSAMPLE_SUBPIXEL
+fixed4 frag (v2f i) : SV_Target
+{
+    float2x2 J = JACOBIAN(i.uv);
+    
+    float R =   sdf(i.uv + mul(J, float2(-2.5 / 6.0, 0) * _PlaceHolder)) + 
+                sdf(i.uv + mul(J, float2(-1.5 / 6.0, 0) * _PlaceHolder));
 
-fixed4 frag_sdf_subpixel (v2f i) : SV_Target
-{
-    return fixed4(1, 0, 0, 1);
+    float G =   sdf(i.uv + mul(J, float2(-0.5 / 6.0, 0) * _PlaceHolder)) + 
+                sdf(i.uv + mul(J, float2( 0.5 / 6.0, 0) * _PlaceHolder));
+        
+    float B =   sdf(i.uv + mul(J, float2(1.5 / 6.0, 0) * _PlaceHolder)) + 
+                sdf(i.uv + mul(J, float2(2.5 / 6.0, 0) * _PlaceHolder));
+                
+    return fixed4(R, G, B, (R + G + B) / 3.) / 2.;
 }
-
-fixed4 frag_sdf_supersample_subpixel (v2f i) : SV_Target
+#else // SDF_NONE
+fixed4 frag (v2f i) : SV_Target
 {
-    return fixed4(1, 0, 0, 1);
+    return (fixed4)SAMPLE_SDF(_MainTex, i.uv);
 }
+#endif

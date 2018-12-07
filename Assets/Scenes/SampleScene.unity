@@ -389,7 +389,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 9722a6162f7624ccc913be32a7920b09, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -445,3 +445,4 @@ MonoBehaviour:
   matSubpixel: {fileID: 2100000, guid: a5529a8bb9b9f4e08b28b6ebb762caaf, type: 2}
   matSubpixelSuperSampled: {fileID: 2100000, guid: 9722a6162f7624ccc913be32a7920b09,
     type: 2}
+  matXOR: {fileID: 2100000, guid: 23a8641b650ff470cb0fb0ecbaea49ee, type: 2}
