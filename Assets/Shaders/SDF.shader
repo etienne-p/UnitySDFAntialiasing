@@ -18,7 +18,7 @@
             #pragma fragment frag
             #include "UnityCG.cginc"
             #include "SDF.cginc"
-            #pragma multi_compile __ SDF_DEFAULT SDF_SUPERSAMPLE SDF_SUBPIXEL SDF_SUBPIXEL_DX SDF_SUPERSAMPLE_SUBPIXEL
+            #pragma multi_compile __ SDF_DEFAULT SDF_SUPERSAMPLE SDF_SUPERSAMPLE_DX SDF_SUBPIXEL SDF_SUBPIXEL_DX SDF_SUPERSAMPLE_SUBPIXEL
             ENDCG
         }
     }

@@ -6,10 +6,12 @@ using UnityEngine;
 [RequireComponent(typeof(MeshRenderer))]
 public class Helper : MonoBehaviour 
 {
-    public enum Technique { None, Default, SuperSampling, Subpixel, SubpixelDx, SubpixelSuperSampled }
+    public enum Technique { None, Default, SuperSampling, SuperSamplingDx, Subpixel, SubpixelDx, SubpixelSuperSampled }
 
     [SerializeField]
     Shader sdfShader;
+    [SerializeField]
+    Texture sdfTex;
 
     static Dictionary<Technique, string> MakeKeywordsLookup()
     {
@@ -17,6 +19,7 @@ public class Helper : MonoBehaviour
         dict[Technique.None] = "SDF_NONE";
         dict[Technique.Default] = "SDF_DEFAULT";
         dict[Technique.SuperSampling] = "SDF_SUPERSAMPLE";
+        dict[Technique.SuperSamplingDx] = "SDF_SUPERSAMPLE_DX";
         dict[Technique.Subpixel] = "SDF_SUBPIXEL";
         dict[Technique.SubpixelDx] = "SDF_SUBPIXEL_DX";
         dict[Technique.SubpixelSuperSampled] = "SDF_SUPERSAMPLE_SUBPIXEL";
@@ -63,6 +66,14 @@ public class Helper : MonoBehaviour
 
             Shader.DisableKeyword(keywords[m_PrevTechnique]);
             Shader.EnableKeyword(keywords[m_Technique]);
+        }
+    }
+
+    private void OnValidate()
+    {
+        if (sdfTex != null && sdfMaterial != null)
+        {
+            sdfMaterial.mainTexture = sdfTex;
         }
     }
 
